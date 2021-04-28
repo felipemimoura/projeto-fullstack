@@ -32,6 +32,7 @@ export class UserBusiness {
       }
 
       const user = await this.userDatabase.getUserByEmail(email)
+      
       if(user){
         throw new Error(`${email} já cadastrado em nossa banco de dados.`)
       }
