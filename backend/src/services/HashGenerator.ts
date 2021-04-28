@@ -8,6 +8,9 @@ export class HashGenerator {
 
     return result
   }
+  public compareHash = async (s: string, hash: string): Promise<boolean> => {
+    return bcrypt.compare(s, hash)
+  }
 }
 
 export default new HashGenerator()

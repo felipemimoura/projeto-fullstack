@@ -32,8 +32,8 @@ export class UserBusiness {
       }
 
       const user = await this.userDatabase.getUserByEmail(email)
-      
-      if(user){
+
+      if (user) {
         throw new Error(`${email} já cadastrado em nossa banco de dados.`)
       }
       const id = this.idGenerator.generate()
@@ -52,6 +52,32 @@ export class UserBusiness {
 
     } catch (error) {
       throw new Error(error.message)
+    }
+  }
+  public async login(email: string, password: string) {
+    try {
+      if (!email || !password) {
+        throw new Error("Please check fields")
+      }
+      const user = await this.userDatabase.getUserByEmail(email)
+      if (!user) {
+        throw new Error("Sorry, user not found")
+      }
+      const isPasswordCorrect = await this.hashGenerator.compareHash(
+        password,
+        user.getPassword()
+      )
+      if (!isPasswordCorrect) {
+        throw new Error("Invalid Credentials")
+      }
+
+      const accessToken = this.tokenGenerator.generate({
+        id: user.getID()
+      })
+
+      return { accessToken }
+    } catch (error) {
+      throw new Error(error.statusCode)
     }
   }
 }
