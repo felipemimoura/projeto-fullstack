@@ -30,6 +30,11 @@ export class UserBusiness {
       if (password.length < 6) {
         throw new Error("'password' must contain at least 6 characters")
       }
+
+      const user = await this.userDatabase.getUserByEmail(email)
+      if(user){
+        throw new Error(`${email} já cadastrado em nossa banco de dados.`)
+      }
       const id = this.idGenerator.generate()
 
       const cypherPass = await this.hashGenerator.hash(password)

@@ -1,3 +1,4 @@
+import { raw } from "express";
 import { User } from "../model/User";
 import BaseDateBase from "./BaseDataBase";
 
@@ -29,6 +30,17 @@ export class UserDataBase extends BaseDateBase {
           '${user.getNickname()}'
         )
       `)
+    } catch (error) {
+      throw new Error(error.sqlMessage || error.message)
+    }
+  }
+
+  public async getUserByEmail(email: string): Promise<User | undefined> {
+    try {
+      const result = await BaseDateBase.connection.raw(`
+        SELECT * FROM ${this.tableName} WHERE email = '${email}'
+      `)
+      return this.toModel(result[0][0])
     } catch (error) {
       throw new Error(error.sqlMessage || error.message)
     }
