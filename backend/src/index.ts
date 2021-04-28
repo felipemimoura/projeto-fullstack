@@ -1,13 +1,15 @@
 import express from 'express'
 import cors from 'cors'
 import { AddressInfo } from "net";
-import { userRouter } from './router/UserRouter';
+import { userData } from './router/UserRouter';
 import dotenv from "dotenv";
+import { artistData } from './router/ArtistRouter';
 
 const app = express()
 app.use(express.json())
 app.use(cors())
-app.use("/user", userRouter)
+app.use("/user", userData)
+app.use("/artist",artistData)
 
 dotenv.config()
 
