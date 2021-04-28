@@ -2,11 +2,13 @@ import { UserDataBase } from "../data/UserDataBase";
 import { User } from "../model/User";
 import { HashGenerator } from "../services/HashGenerator";
 import { IdGenerator } from "../services/idGenerator";
+import { TokenGenerator } from "../services/tokenGenerator";
 
 
 export class UserBusiness {
   constructor(
     private idGenerator: IdGenerator,
+    private tokenGenerator: TokenGenerator,
     private hashGenerator: HashGenerator,
     private userDatabase: UserDataBase
   ) { }
@@ -35,7 +37,12 @@ export class UserBusiness {
       await this.userDatabase.createUser(
         new User(id, name, email, cypherPass, nickname)
       )
-      return { message: "User Created" }
+
+      const accessToken = this.tokenGenerator.generate({
+        id
+      })
+
+      return { accessToken }
 
     } catch (error) {
       throw new Error(error.message)
@@ -45,6 +52,7 @@ export class UserBusiness {
 
 export default new UserBusiness(
   new IdGenerator(),
+  new TokenGenerator(),
   new HashGenerator(),
   new UserDataBase()
 )

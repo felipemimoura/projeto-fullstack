@@ -3,9 +3,10 @@ import { UserBusiness } from '../business/UserBusiness'
 import { UserDataBase } from '../data/UserDataBase'
 import { HashGenerator } from '../services/HashGenerator'
 import { IdGenerator } from '../services/idGenerator'
+import { TokenGenerator } from '../services/tokenGenerator'
 
 
-const userBusiness = new UserBusiness(new IdGenerator(), new HashGenerator(), new UserDataBase())
+const userBusiness = new UserBusiness(new IdGenerator(), new TokenGenerator(), new HashGenerator(), new UserDataBase())
 
 export class UserController {
   public async signup(req: Request, res: Response) {
