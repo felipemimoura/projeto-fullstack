@@ -18,8 +18,6 @@ export class UserController {
         nickname,
         password
       )
-      console.log(result)
-
       res.status(200).send(result)
     } catch (error) {
       const { statusCode, message } = error
@@ -29,10 +27,10 @@ export class UserController {
   public async login(req: Request, res: Response) {
     try {
       const { email, password } = req.body
-      const result = await userBusiness.login(email,password)
+      const result = await userBusiness.login(email, password)
       res.status(200).send(result)
     } catch (error) {
-
+     res.status(400).send("Check the fields")
     }
   }
 }
