@@ -2,7 +2,7 @@ import express from 'express'
 import userController from '../controller/UserController'
 
 
-export const userRouter = express.Router()
+export const userData = express.Router()
 
-userRouter.post('/signup', userController.signup)
-userRouter.post('/login', userController.login)
+userData.post('/signup', userController.signup)
+userData.post('/login', userController.login)

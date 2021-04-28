@@ -17,6 +17,16 @@ export class TokenGenerator {
 
     return newToken
   }
+  public verify = (token: string): string | null => {
+    try {
+      const { id } = jwt.verify(token, process.env.JWT_KEY!) as AuthenticationData
+
+      return id
+    } catch (err) {
+      console.log(err.message);
+      return null
+    }
+  }
 
 }
 

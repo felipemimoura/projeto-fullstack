@@ -59,7 +59,7 @@ export class UserBusiness {
       if (!email || !password) {
         throw new Error("Please check fields")
       }
-    
+
       const user = await this.userDatabase.getUserByEmail(email)
 
       if (!user) {
@@ -69,8 +69,6 @@ export class UserBusiness {
         password,
         user.getPassword()
       )
-
-      console.log(isPasswordCorrect)
       if (!isPasswordCorrect) {
         throw new Error("Invalid Credentials")
       }

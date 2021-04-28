@@ -30,7 +30,7 @@ export class UserController {
       const result = await userBusiness.login(email, password)
       res.status(200).send(result)
     } catch (error) {
-     res.status(400).send("Check the fields")
+      res.status(400).send("Check the fields")
     }
   }
 }
